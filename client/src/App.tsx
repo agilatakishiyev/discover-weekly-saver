@@ -9,11 +9,8 @@ function App() {
   return (
     <>
       <Header />
-
       <Main />
-
       <Contact />
-
       <Footer />
     </>
   );
