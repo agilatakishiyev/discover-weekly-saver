@@ -3,6 +3,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
+interface ContactForm {
+  fullname: string;
+  email: string;
+  message: string;
+}
+
 const validationSchema = yup
   .object({
     fullname: yup.string().required().min(2),
@@ -12,15 +18,13 @@ const validationSchema = yup
   .required();
 
 export const Contact: React.FC = () => {
-  const { register, handleSubmit } = useForm<{
-    fullname: string;
-    email: string;
-    message: string;
-  }>({
+  const { register, handleSubmit } = useForm<ContactForm>({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (data: ContactForm) => {
+    console.log(data);
+  };
 
   return (
     <div className="container mx-auto my-10">
@@ -42,34 +46,34 @@ export const Contact: React.FC = () => {
                 <div className="grid gap-6">
                   <div className="col-span-12 sm:col-span-6">
                     <label
-                      htmlFor="fullname"
                       className="block text-sm font-medium text-gray-700"
+                      htmlFor="fullname"
                     >
                       Fullname
                     </label>
                     <input
+                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      id="fullname"
                       type="text"
                       autoComplete="fullname"
                       placeholder="Fullname"
-                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      id="fullname"
                       {...register("fullname")}
                     />
                   </div>
 
                   <div className="col-span-12 sm:col-span-6">
                     <label
-                      htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
+                      htmlFor="email"
                     >
                       Email address
                     </label>
                     <input
+                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      id="email"
                       type="text"
                       autoComplete="email"
                       placeholder="Email"
-                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      id="email"
                       {...register("email")}
                     />
                   </div>

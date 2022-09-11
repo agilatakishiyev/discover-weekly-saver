@@ -1,0 +1,23 @@
+{
+  "name": "discover-weekly-saver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "cd ./server ; npm run start:dev",
+    "start-client": "cd ./client ; npm run start",
+    "start": "npm run start-server & npm run start-client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agilatakishiyev/discover-weekly-saver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agilatakishiyev/discover-weekly-saver/issues"
+  },
+  "homepage": "https://github.com/agilatakishiyev/discover-weekly-saver#readme"
+}
