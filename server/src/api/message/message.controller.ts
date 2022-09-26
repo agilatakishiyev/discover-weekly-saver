@@ -8,7 +8,7 @@ export class MessageController {
   @Inject(MessageService)
   private readonly service: MessageService;
 
-  @Post()
+  @Post('/')
   public createMessage(@Body() body: CreateMessageDto): Promise<Message> {
     return this.service.createMessage(body);
   }

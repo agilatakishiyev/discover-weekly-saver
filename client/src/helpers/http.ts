@@ -1,10 +1,36 @@
-import { Axios } from "axios";
+import axios from "axios";
 
-export const axios = new Axios();
+const axiosInstance = axios.create({
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5555"
+      : process.env.PUBLIC_URL,
+});
 
-console.log(process.env.PUBLIC_URL);
+axiosInstance.interceptors.request.use(
+  (request) => {
+    console.log(request);
+    // Edit request config
+    return request;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
 
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5555"
-    : process.env.PUBLIC_URL;
+axiosInstance.interceptors.response.use(
+  (response) => {
+    console.log(response);
+    // Edit response config
+    return response;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.defaults.headers.post["Content-Type"] = "application/json";
+
+export default axiosInstance;
