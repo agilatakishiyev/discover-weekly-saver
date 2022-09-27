@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "../helpers/http";
+import { ErrorLabel } from "./ErrorLabel";
 
 interface ContactForm {
   fullname: string;
@@ -19,7 +20,11 @@ const validationSchema = yup
   .required();
 
 export const Contact: React.FC = () => {
-  const { register, handleSubmit } = useForm<ContactForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactForm>({
     resolver: yupResolver(validationSchema),
   });
 
@@ -52,7 +57,7 @@ export const Contact: React.FC = () => {
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid gap-6">
-                  <div className="col-span-12 sm:col-span-6">
+                  <div className="col-span-12">
                     <label
                       className="block text-sm font-medium text-gray-700"
                       htmlFor="fullname"
@@ -67,9 +72,10 @@ export const Contact: React.FC = () => {
                       placeholder="Fullname"
                       {...register("fullname")}
                     />
+                    <ErrorLabel>{errors.fullname?.message}</ErrorLabel>
                   </div>
 
-                  <div className="col-span-12 sm:col-span-6">
+                  <div className="col-span-12">
                     <label
                       className="block text-sm font-medium text-gray-700"
                       htmlFor="email"
@@ -84,6 +90,7 @@ export const Contact: React.FC = () => {
                       placeholder="Email"
                       {...register("email")}
                     />
+                    <ErrorLabel>{errors.email?.message}</ErrorLabel>
                   </div>
 
                   <div className="col-span-12">
@@ -100,6 +107,7 @@ export const Contact: React.FC = () => {
                       id="message"
                       {...register("message")}
                     ></textarea>
+                    <ErrorLabel>{errors.message?.message}</ErrorLabel>
                   </div>
                 </div>
               </div>
