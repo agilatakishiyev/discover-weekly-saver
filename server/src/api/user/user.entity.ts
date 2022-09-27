@@ -11,14 +11,11 @@ export class User {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column({ type: 'varchar', length: 120 })
-  public email: string;
+  @Column({ type: 'varchar' })
+  public code!: string;
 
   @Column({ type: 'varchar' })
-  public password: string;
-
-  @Column({ type: 'boolean', default: false })
-  public isActive: boolean;
+  public token: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;
