@@ -27,7 +27,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="container mx-auto my-10">
+    <div className="w-full mx-auto my-10">
       <div className="shadow overflow-hidden sm:rounded-md px-4 py-5">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">

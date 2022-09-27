@@ -1,36 +1,22 @@
-import { useMemo, useState } from "react";
-import { ChoosePlan } from "./steps/choose-plan";
-import { ConnectSpotify } from "./steps/connect-spotify";
-import { EmailConfirmation } from "./steps/email-confirmation";
-import { Register } from "./steps/register";
-
-const Step = {
-  register: 1,
-  "email-confirmation": 2,
-  "connect-spotify": 3,
-  "choose-plan": 4,
-} as const;
+import { useMemo } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const Process = () => {
-  const [currentStep, setCurrentStep] = useState<
-    typeof Step[keyof typeof Step]
-  >(Step.register);
+  const location = useLocation();
 
   const stepColorWidth = useMemo(() => {
-    switch (currentStep) {
-      case Step.register:
+    switch (location.pathname) {
+      case "/process/connect-spotify":
         return "w-0";
-      case Step["email-confirmation"]:
-        return "w-2/3";
-      case Step["connect-spotify"]:
-        return "w-3/4";
-      case Step["choose-plan"]:
+      case "/process/choose-plan":
+        return "w-2/4";
+      case "/process/final":
         return "w-full";
     }
-  }, [currentStep]);
+  }, [location]);
 
   return (
-    <div className="mx-auto flex flex-col justify-center pt-8 md:justify-start lg:w-[34rem]">
+    <div className="mx-auto mb-10 flex flex-col justify-center pt-8 md:justify-start lg:w-[34rem]">
       <div className="flex w-full flex-col rounded-2xl bg-white px-2 sm:px-14">
         <div className="mx-auto w-full max-w-md pb-10 px-8 sm:px-0">
           <div className="relative">
@@ -43,17 +29,21 @@ export const Process = () => {
               ></div>
             </div>
             <ul className="relative flex w-full justify-between">
-              {Object.values(Step).map((step) => {
+              {[
+                "/process/connect-spotify",
+                "/process/choose-plan",
+                "/process/final",
+              ].map((step, index) => {
                 return (
                   <li className="text-left" key={step}>
                     <span
                       className={`flex h-5 w-5 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ${
-                        step === currentStep
+                        step === location.pathname
                           ? "ring ring-gray-600 ring-offset-2"
                           : ""
                       }`}
                     >
-                      {step}
+                      {index + 1}
                     </span>
                   </li>
                 );
@@ -61,12 +51,13 @@ export const Process = () => {
             </ul>
           </div>
         </div>
-        {currentStep === 1 && <Register />}
-        {currentStep === 2 && <EmailConfirmation />}
-        {currentStep === 3 && <ConnectSpotify />}
-        {currentStep === 4 && <ChoosePlan />}
 
-        <button className="my-2 flex items-center justify-center rounded-md bg-gray-900 py-3 font-medium text-white">
+        <Outlet />
+
+        <button
+          disabled
+          className="w-full my-2 flex items-center justify-center rounded-md bg-gray-900 py-3 font-medium text-white disabled:opacity-75"
+        >
           Continue
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axiosInstance from "../../../helpers/http";
+
 export const ChoosePlan = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    const code = searchParams.get("code");
+
+    axiosInstance.post("/user/save-user", { code });
+  }, []);
+
   return (
     <>
       <h2 className="text-2xl font-semibold text-gray-700">Choose your plan</h2>
@@ -10,7 +24,6 @@ export const ChoosePlan = () => {
             id="radio_1"
             type="radio"
             name="radio"
-            checked
           />
           <span className="absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white peer-checked:border-gray-900"></span>
           <label
@@ -50,7 +63,6 @@ export const ChoosePlan = () => {
               name="terms"
               type="checkbox"
               className="h-6 w-6 shrink-0 accent-gray-900"
-              checked
             />
             <span id="terms-description" className="text-sm text-gray-600">
               I agree to the{" "}
