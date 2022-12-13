@@ -2,10 +2,10 @@ import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import axios from "../helpers/http";
 import { ErrorLabel } from "./ErrorLabel";
+import { useSendMessageMutation } from "../api/message/mutations";
 
-interface ContactForm {
+export interface ContactForm {
   fullname: string;
   email: string;
   message: string;
@@ -20,6 +20,7 @@ const validationSchema = yup
   .required();
 
 export const Contact: React.FC = () => {
+  const sendMessageMutation = useSendMessageMutation();
   const {
     register,
     handleSubmit,
@@ -29,14 +30,7 @@ export const Contact: React.FC = () => {
   });
 
   const onSubmit = (data: ContactForm) => {
-    axios
-      .post("/message", data)
-      .then(() => {
-        alert("Message successfully sent");
-      })
-      .catch(() => {
-        alert("Something went wrong");
-      });
+    sendMessageMutation.mutate(data);
   };
 
   return (
@@ -54,7 +48,7 @@ export const Contact: React.FC = () => {
         </div>
         <div className="mt-5 md:mt-0 md:col-span-2">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="shadow overflow-hidden sm:rounded-md">
+            <div className="overflow-hidden shadow sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid gap-6">
                   <div className="col-span-12">
@@ -65,7 +59,7 @@ export const Contact: React.FC = () => {
                       Fullname
                     </label>
                     <input
-                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                       id="fullname"
                       type="text"
                       autoComplete="fullname"
@@ -83,7 +77,7 @@ export const Contact: React.FC = () => {
                       Email address
                     </label>
                     <input
-                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                       id="email"
                       type="text"
                       autoComplete="email"
@@ -103,7 +97,7 @@ export const Contact: React.FC = () => {
 
                     <textarea
                       placeholder="Describe your need"
-                      className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                       id="message"
                       {...register("message")}
                     ></textarea>
@@ -111,10 +105,10 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+              <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
                 <button
                   type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-900 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 >
                   Send
                 </button>

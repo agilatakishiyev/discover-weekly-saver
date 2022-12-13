@@ -13,6 +13,7 @@ function App() {
   return (
     <>
       <Header />
+
       <Routes>
         <Route element={<Main />} path="/" />
         <Route element={<Contact />} path="/contact" />

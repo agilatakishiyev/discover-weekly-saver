@@ -14,8 +14,11 @@ export const ConnectSpotify = () => {
   };
 
   return (
-    <>
-      <button onClick={handleRedirectToSpotify}>Connect spotify</button>
-    </>
+    <button
+      className="flex items-center justify-center w-full max-w-md py-3 mx-auto my-2 font-medium text-white bg-[#1DB954] rounded-md"
+      onClick={handleRedirectToSpotify}
+    >
+      Connect spotify
+    </button>
   );
 };

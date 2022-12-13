@@ -1,80 +1,79 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import axiosInstance from "../../../helpers/http";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSaveUserMutation } from "../../../api/user/mutations";
 
 export const ChoosePlan = () => {
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const saveUserMutation = useSaveUserMutation();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-
     const code = searchParams.get("code");
 
-    axiosInstance.post("/user/save-user", { code });
+    if (code) {
+      searchParams.delete("code");
+      setSearchParams(searchParams);
+
+      saveUserMutation.mutate(
+        { code: code as string },
+        {
+          onSuccess: (data) => {
+            console.log(data);
+          },
+        }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
+    <div className="w-full max-w-md mx-auto">
       <h2 className="text-2xl font-semibold text-gray-700">Choose your plan</h2>
 
-      <div className="mt-8 flex w-full flex-col pb-8">
+      <div className="flex flex-col pb-8 mt-8">
         <div className="relative mb-4">
           <input
-            className="peer hidden"
+            className="hidden peer"
             id="radio_1"
             type="radio"
             name="radio"
+            checked
+            readOnly
           />
-          <span className="absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white peer-checked:border-gray-900"></span>
+          <span className="box-content absolute block w-3 h-3 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full right-4 top-1/2 peer-checked:border-gray-900"></span>
           <label
-            className="flex cursor-pointer flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16"
+            className="flex flex-col p-4 pr-8 border border-gray-300 cursor-pointer rounded-2xl bg-slate-100/80 sm:pr-16"
             htmlFor="radio_1"
           >
-            <span className="mb-2 text-lg font-semibold">Small Team</span>
+            <span className="mb-2 text-lg font-semibold">Basic plan</span>
             <p className="text-sm sm:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-              mollitia corporis non fugiat ratione.
+              For now there is only basic plan, which is free
             </p>
-          </label>
-        </div>
-        <div className="relative mb-4">
-          <input
-            className="peer hidden"
-            id="radio_2"
-            type="radio"
-            name="radio"
-          />
-          <span className="absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white peer-checked:border-gray-900"></span>
-          <label
-            className="flex cursor-pointer flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16"
-            htmlFor="radio_2"
-          >
-            <span className="mb-2 text-lg font-semibold">Large Team</span>
-            <p className="text-sm sm:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-              mollitia corporis non fugiat ratione.
-            </p>
-          </label>
-        </div>
-        <div className="my-4 space-y-3">
-          <label htmlFor="terms" className="flex space-x-4">
-            <input
-              id="terms"
-              name="terms"
-              type="checkbox"
-              className="h-6 w-6 shrink-0 accent-gray-900"
-            />
-            <span id="terms-description" className="text-sm text-gray-600">
-              I agree to the{" "}
-              <a className="underline" href="/">
-                Terms and Conditions
-              </a>
-              . Learn about our Privacy Policy and our measures to keep your
-              data safe and secure.
-            </span>
           </label>
         </div>
       </div>
-    </>
+
+      <button
+        className="flex items-center justify-center w-full py-3 mx-auto my-2 font-medium text-white bg-gray-900 rounded-md disabled:opacity-50"
+        onClick={() => navigate("final")}
+      >
+        Continue
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4 ml-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M14 5l7 7m0 0l-7 7m7-7H3"
+          />
+        </svg>
+      </button>
+    </div>
   );
 };

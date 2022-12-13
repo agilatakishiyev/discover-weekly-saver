@@ -6,6 +6,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+enum Plan {
+  BASIC = 'basic',
+  PREMIUM = 'premium',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -15,11 +20,17 @@ export class User {
   public code!: string;
 
   @Column({ type: 'varchar' })
-  public token: string;
+  public access_token: string;
+
+  @Column({ type: 'varchar' })
+  public refresh_token: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt!: Date;
+
+  @UpdateDateColumn({ type: 'enum', enum: Plan, default: Plan.BASIC })
+  public plan!: Plan;
 }

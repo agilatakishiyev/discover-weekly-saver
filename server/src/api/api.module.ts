@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MessageModule } from './message/message.module';
+import { SpotifyModule } from './spotify/spotify.module';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [UserModule, MessageModule],
+  imports: [SpotifyModule, UserModule, MessageModule],
 })
 export class ApiModule {}

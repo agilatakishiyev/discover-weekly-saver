@@ -17,8 +17,8 @@ export const Process = () => {
 
   return (
     <div className="mx-auto mb-10 flex flex-col justify-center pt-8 md:justify-start lg:w-[34rem]">
-      <div className="flex w-full flex-col rounded-2xl bg-white px-2 sm:px-14">
-        <div className="mx-auto w-full max-w-md pb-10 px-8 sm:px-0">
+      <div className="flex flex-col w-full px-2 bg-white rounded-2xl sm:px-14">
+        <div className="w-full max-w-md px-8 pb-10 mx-auto sm:px-0">
           <div className="relative">
             <div
               className="absolute left-0 top-2 h-0.5 w-full bg-gray-200"
@@ -28,7 +28,7 @@ export const Process = () => {
                 className={`absolute h-full bg-gray-900 ${stepColorWidth}`}
               ></div>
             </div>
-            <ul className="relative flex w-full justify-between">
+            <ul className="relative flex justify-between w-full">
               {[
                 "/process/connect-spotify",
                 "/process/choose-plan",
@@ -53,27 +53,6 @@ export const Process = () => {
         </div>
 
         <Outlet />
-
-        <button
-          disabled
-          className="w-full my-2 flex items-center justify-center rounded-md bg-gray-900 py-3 font-medium text-white disabled:opacity-75"
-        >
-          Continue
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="ml-4 h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </button>
       </div>
     </div>
   );
