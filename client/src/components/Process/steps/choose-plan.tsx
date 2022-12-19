@@ -1,31 +1,35 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSaveUserMutation } from "../../../api/user/mutations";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useSaveUserMutation,
+  useSubscribeUserMutation,
+} from "../../../api/user/mutations";
 
 export const ChoosePlan = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const navigate = useNavigate();
-
   const saveUserMutation = useSaveUserMutation();
+  const subscribeUserMutation = useSubscribeUserMutation();
+  const code = new URLSearchParams(location.search).get("code");
 
   useEffect(() => {
-    const code = searchParams.get("code");
-
     if (code) {
-      searchParams.delete("code");
-      setSearchParams(searchParams);
-
       saveUserMutation.mutate(
         { code: code as string },
         {
-          onSuccess: (data) => {
-            console.log(data);
+          onSuccess: (res) => {
+            localStorage.setItem("code", code);
           },
         }
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSubscribe = () => {
+    subscribeUserMutation.mutate({ code: code as string, plan: "BASIC" });
+    navigate("/process/final");
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -56,7 +60,7 @@ export const ChoosePlan = () => {
 
       <button
         className="flex items-center justify-center w-full py-3 mx-auto my-2 font-medium text-white bg-gray-900 rounded-md disabled:opacity-50"
-        onClick={() => navigate("final")}
+        onClick={handleSubscribe}
       >
         Continue
         <svg

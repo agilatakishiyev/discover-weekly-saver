@@ -10,8 +10,4 @@ export class GetUserInfoDto {
   @IsString()
   @IsNotEmpty()
   public access_token: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public refresh_token: string;
 }

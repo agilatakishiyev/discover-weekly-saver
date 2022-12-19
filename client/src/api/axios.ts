@@ -8,29 +8,25 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  (request) => {
-    console.log(request);
-    // Edit request config
-    return request;
+  function (config) {
+    return config;
   },
-  (error) => {
-    console.log(error);
+  function (error) {
     return Promise.reject(error);
   }
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    console.log(response);
-    // Edit response config
+  function (response) {
     return response;
   },
-  (error) => {
-    console.log(error);
+  function (error) {
     return Promise.reject(error);
   }
 );
 
 axiosInstance.defaults.headers.post["Content-Type"] = "application/json";
+axiosInstance.defaults.headers.common["Access-Token"] =
+  localStorage.getItem("access_token") || "";
 
 export default axiosInstance;

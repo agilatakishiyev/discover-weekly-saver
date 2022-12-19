@@ -1,5 +1,5 @@
 const CLIENT_ID = "b73e4bdbb9424cfb9c7624ab42ce70de";
-const REDIRECT_URI = `http://localhost:3000/process/choose-plan`;
+const REDIRECT_URI = `http://localhost:3333/process/choose-plan`;
 
 export const ConnectSpotify = () => {
   const handleRedirectToSpotify = () => {

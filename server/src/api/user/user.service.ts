@@ -14,8 +14,12 @@ export class UserService {
   @Inject(SpotifyService)
   private readonly spotifyService: SpotifyService;
 
-  getUserInfo(body: GetUserInfoDto): Promise<User> {
-    return null;
+  public async getUserInfo(body: GetUserInfoDto): Promise<User> {
+    const user = await this.repository.findOneBy({
+      access_token: body.access_token,
+    });
+
+    return user;
   }
 
   public async createUser(body: CreateUserDto): Promise<User> {

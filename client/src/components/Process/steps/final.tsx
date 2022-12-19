@@ -1,7 +1,7 @@
 export const Final = () => {
   return (
-    <div>
-      <h1>Congratulations</h1>
+    <div className="w-full max-w-md mx-auto">
+      <h1 className="text-2xl font-semibold text-gray-700">Congratulations</h1>
       <p>
         Right now your first discover weekly backup is happening in the
         background <br />

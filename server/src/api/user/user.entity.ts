@@ -31,6 +31,9 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt!: Date;
 
-  @UpdateDateColumn({ type: 'enum', enum: Plan, default: Plan.BASIC })
-  public plan!: Plan;
+  @Column({ type: 'enum', enum: Plan, default: null })
+  public plan: Plan;
+
+  @Column({ type: 'boolean', default: false })
+  public isSubscribed: boolean;
 }
